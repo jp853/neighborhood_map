@@ -1,4 +1,4 @@
-// function mapCanvasApp() {
+
 
     if (typeof google === 'undefined') {
             alert('ERROR: Google maps failed to load');
@@ -523,4 +523,4 @@
 
     // use knockout js to organize mvvm
     ko.applyBindings(myViewModel);
-//}
+
