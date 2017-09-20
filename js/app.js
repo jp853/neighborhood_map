@@ -68,7 +68,7 @@
         },
 
 
-        // locations that would normally be imported for a database
+        // locations that would normally be imported from a database
         locations: [
                 {
                     name: 'Chile Pepper Bike Shop',
