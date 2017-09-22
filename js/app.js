@@ -76,7 +76,7 @@ var Model = {
     },
 
 
-    // locations that would normally be imported from a database
+    // locations that would normally be imported for a database
     locations: [{
             name: 'Chile Pepper Bike Shop',
             type: 'Bike Shop'
@@ -231,7 +231,7 @@ var Model = {
             dataType: 'jsonp',
             success: function(data) {
                 // Four Square data
-                console.log(data);
+              //  console.log(data);
                 // get data for each location
                 var fsDataObject = data.response.venue;
                 // define variables for objects to avoid repetition
@@ -341,7 +341,7 @@ var ViewModel = function() {
 
     // make an array so we can push each marker into it
     self.markersList = [];
-    console.log(self.markersList);
+   // console.log(self.markersList);
 
     // animate mare and show info window when a marker is clicked
     self.makeFourSquareInfoWindow = function(i, markerCopy) {
@@ -378,7 +378,7 @@ var ViewModel = function() {
 
     // connect each list item to correct info window
     self.makeListClickable = function(index) {
-        console.log(self.markersList[index()]);
+       // console.log(self.markersList[index()]);
         google.maps.event.trigger(self.markersList[index()], 'click');
         self.hideList();
     };
@@ -397,8 +397,27 @@ var ViewModel = function() {
         $('.show-locations').hide();
     };
 
+    self.whatEver = ko.computed(function() {
+        var query = self.query().toLowerCase();
+
+        console.log(query)
+
+        if (!query) {
+            return self.locationsList
+        } else {
+
+            // ko.utils.arrayFilter
+            // http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/indexOf
+
+            // query
+
+            return [] // instead, return a matching subset of location objects
+        }
+    });
+
     // set up search function
-    self.search = function() {
+  /*  self.search = function() {
         var searchValue = new RegExp(self.query(), 'i');
         var i, result;
 
@@ -477,7 +496,7 @@ var ViewModel = function() {
                 }
             }
         }
-    };
+    };*/
 
     // initialize the map
     self.initMap = function() {
@@ -493,7 +512,7 @@ var ViewModel = function() {
         self.infoWindow = new google.maps.InfoWindow({
             maxWidth: 300,
         });
-        console.log(locationsLength);
+       // console.log(locationsLength);
 
         // make markers with info windows
         for (i = 0; i < locationsLength; i++) {
@@ -507,7 +526,7 @@ var ViewModel = function() {
             self.markersList.push(marker);
             // add info windows
             self.makeFourSquareInfoWindow(i, marker);
-            console.log(marker);
+          //  console.log(marker);
         }
     };
 
