@@ -412,7 +412,9 @@ var ViewModel = function() {
 
             // query
 
-            return [] // instead, return a matching subset of location objects
+            return ko.utils.arrayFilter(self.locationsList, function(query) {
+                return ko.utils.stringStartsWith(locationsList.name().toLowerCase(), filter);
+            }) // instead, return a matching subset of location objects
         }
     });
 
