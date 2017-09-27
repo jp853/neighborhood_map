@@ -75,7 +75,7 @@
     <main id="map"></main>
 
     <aside class="list-container">
-      <ul data-bind="foreach: whatEver" class="list">
+      <ul data-bind="foreach: search" class="list">
         <li data-bind="text: name, click: $parent.makeListClickable.bind($data, $index), attr: {id: $index}" class="list-item"></li>
 
       </ul>

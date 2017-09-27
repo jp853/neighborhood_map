@@ -397,7 +397,7 @@ var ViewModel = function() {
         $('.show-locations').hide();
     };
 
-    self.whatEver = ko.computed(function() {
+    self.search = ko.computed(function() {
         var query = self.query().toLowerCase();
 
         console.log(query)
@@ -419,10 +419,8 @@ var ViewModel = function() {
 
                 console.log(name, query, queryIsInName);
 
-              //  return ko.utils.stringStartsWith(self.locationsList.name().toLowerCase(), filter);
-
-              return queryIsInName;
-            }) // instead, return a matching subset of location objects
+                return queryIsInName;
+            })
         }
     });
 
@@ -532,6 +530,7 @@ var ViewModel = function() {
                 icon: locations[i].icon
             });
 
+            //add marker object to each locations array
             locations[i].marker = marker;
 
             marker.setMap(self.map);
