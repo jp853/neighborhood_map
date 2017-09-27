@@ -412,8 +412,16 @@ var ViewModel = function() {
 
             // query
 
-            return ko.utils.arrayFilter(self.locationsList, function(query) {
-                return ko.utils.stringStartsWith(locationsList.name().toLowerCase(), filter);
+            return ko.utils.arrayFilter(self.locationsList, function(location) {
+
+                var name = location.name.toLowerCase();
+                var queryIsInName = name.indexOf(query) >= 0 // or !== -1
+
+                console.log(name, query, queryIsInName);
+
+              //  return ko.utils.stringStartsWith(self.locationsList.name().toLowerCase(), filter);
+
+              return queryIsInName;
             }) // instead, return a matching subset of location objects
         }
     });
@@ -523,6 +531,9 @@ var ViewModel = function() {
                 position: locations[i].coordinates,
                 icon: locations[i].icon
             });
+
+            locations[i].marker = marker;
+
             marker.setMap(self.map);
             // add each marker to an array
             self.markersList.push(marker);
@@ -549,4 +560,5 @@ var myViewModel = new ViewModel();
 
 // use knockout js to organize mvvm
 ko.applyBindings(myViewModel);
+
 
