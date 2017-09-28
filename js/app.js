@@ -406,23 +406,36 @@ var ViewModel = function() {
             return self.locationsList
         } else {
 
-            // ko.utils.arrayFilter
-            // http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html
-            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/indexOf
-
-            // query
-
             return ko.utils.arrayFilter(self.locationsList, function(location) {
 
                 var name = location.name.toLowerCase();
                 var queryIsInName = name.indexOf(query) >= 0 // or !== -1
+                //var markerList = self.markersList;
+
+
 
                 console.log(name, query, queryIsInName);
 
                 return queryIsInName;
             })
         }
+
     });
+
+    self.removeMarker = function() {
+
+        var query = self.query().toLowerCase();
+        var name = locaitons.name.toLowerCase();
+        var queryIsInName = name.indexOf(query) >= 0
+
+        if(!query){
+            return self.marksList
+        } else if (queryIsInName < 0) {
+            self.locationsList[i].marker.setVisible(false);
+        }
+
+    }
+
 
     // set up search function
   /*  self.search = function() {
@@ -520,7 +533,7 @@ var ViewModel = function() {
         self.infoWindow = new google.maps.InfoWindow({
             maxWidth: 300,
         });
-       // console.log(locationsLength);
+        // console.log(locationsLength);
 
         // make markers with info windows
         for (i = 0; i < locationsLength; i++) {
@@ -539,6 +552,7 @@ var ViewModel = function() {
             // add info windows
             self.makeFourSquareInfoWindow(i, marker);
           //  console.log(marker);
+            self.removeMarker()
         }
     };
 
