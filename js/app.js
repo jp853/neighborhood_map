@@ -138,7 +138,6 @@ var Model = {
         // set variables for ajax request
         var i, fullURL, fsDataObject, lat, lng, venue_id;
         var locations = Model.locations;
-        var locationsLength = locations.length;
         var counter = 0;
 
         var timeout = setTimeout(function() {
@@ -169,7 +168,7 @@ var Model = {
 
                     counter++;
 
-                    if (counter === locationsLength) {
+                    if (counter === locations.length) {
                         clearTimeout(timeout);
                         myViewModel.initMap();
                     }
@@ -178,7 +177,7 @@ var Model = {
         }
 
         // Four Square ajax request for supplied locations
-        for (i = 0; i < locationsLength; i++) {
+        for (i = 0; i < locations.length; i++) {
             // construct the full url with base url and supplied location name
             fullURL = baseURL + locations[i].name;
 
@@ -410,50 +409,25 @@ var ViewModel = function() {
 
                 var name = location.name.toLowerCase();
                 var queryIsInName = name.indexOf(query) >= 0 // or !== -1
-                //var markerList = self.markersList;
 
-
-
-                console.log(name, queryIsInName);
-
-                for (var i = 0; i < self.locationsList.length; i++){
-                    if(queryIsInName < 0) {
-                        self.locationsList[i].marker.setVisible(false)
-                    }
+                //console.log(name, queryIsInName);
+                if (queryIsInName === true) {
+                    console.log(name, 'Keep the marker the same')
+                } else {
+                    console.log(name, 'Time to go invisible')
                 }
 
                 return queryIsInName;
             })
         }
-
     });
 
-    // self.hideMarkers = ko.computed(function () {
-    //     var query = self.query().toLowerCase();
-
-    //     if (!query) {
-    //         return self.markersList
-    //     } else {
-    //         return ko.utils.arrayFilter(self.markersList, function(marker) {
-    //             var name = location.name.toLowerCase();
-    //             var queryIsInName = name.indexOf(query) >= 0
-
-    //             return queryIsInName;
-
-    //             if (true) {
-    //                 self.locationsList.marker.setVisible(false);
-    //             }
-    //         })
-    //     }
-    // })
 
 
     // set up search function
-  /*  self.search = function() {
+/*    self.search = function() {
         var searchValue = new RegExp(self.query(), 'i');
         var i, result;
-
-        // ================ FOCUS ON THIS SNIPPET ===========================
 
         // reset everything
         self.infoWindow.close();
@@ -463,9 +437,7 @@ var ViewModel = function() {
             element.setMap(self.map);
         });
 
-        // ================= End OF SNIPPET ===============================
 
-        // ================ FOCUS ON THIS SNIPPET ===========================
 
         // all list items will be displayed on the screen
         $('.list-item').show();
@@ -481,8 +453,6 @@ var ViewModel = function() {
             }
         }
     };
-
-    // ================= End OF SNIPPET ===============================
 
 
     // if changes in the search box, call the search function
@@ -516,7 +486,7 @@ var ViewModel = function() {
                 }
             }
         }
-    };*/
+    }; */
 
     // initialize the map
     self.initMap = function() {
@@ -526,7 +496,6 @@ var ViewModel = function() {
 
         // define variables for the map
         var locations = self.locationsList;
-        var locationsLength = locations.length;
         var i, marker;
         // make one info window
         self.infoWindow = new google.maps.InfoWindow({
@@ -535,7 +504,7 @@ var ViewModel = function() {
         // console.log(locationsLength);
 
         // make markers with info windows
-        for (i = 0; i < locationsLength; i++) {
+        for (i = 0; i < locations.length; i++) {
             // make a new marker
             marker = new google.maps.Marker({
                 position: locations[i].coordinates,
