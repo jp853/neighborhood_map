@@ -340,6 +340,7 @@ var ViewModel = function() {
 
     // make an array so we can push each marker into it
     self.markersList = [];
+
    // console.log(self.markersList);
 
     // animate mare and show info window when a marker is clicked
@@ -410,14 +411,26 @@ var ViewModel = function() {
                 var name = location.name.toLowerCase();
                 var queryIsInName = name.indexOf(query) >= 0 // or !== -1
 
-                //console.log(name, queryIsInName);
-                if (queryIsInName === true) {
-                    console.log(name, 'Keep the marker the same')
-                } else {
-                    console.log(name, 'Time to go invisible')
+                for(var i = 0; i < self.locationsList.length; i++){
+                    if (queryIsInName === true) {
+                        self.locationsList[i].marker.setVisible(true)
+                        console.log(name, " - YOU SEE ME?")
+                    } else {
+                        self.locationsList[i].marker.setVisible(false)
+                        console.log(name, " - DON'T LOOK AT ME!")
+                    }
+                    return queryIsInName;
                 }
 
-                return queryIsInName;
+                //console.log(name, queryIsInName);
+                // if (queryIsInName === true) {
+                //     console.log(name, 'Keep the marker the same')
+
+                // } else {
+                //     console.log(name, 'Time to go invisible')
+                // }
+
+                //return queryIsInName;
             })
         }
     });
