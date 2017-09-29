@@ -414,7 +414,13 @@ var ViewModel = function() {
 
 
 
-                console.log(name, query, queryIsInName);
+                console.log(name, queryIsInName);
+
+                for (var i = 0; i < self.locationsList.length; i++){
+                    if(queryIsInName < 0) {
+                        self.locationsList[i].marker.setVisible(false)
+                    }
+                }
 
                 return queryIsInName;
             })
@@ -422,19 +428,24 @@ var ViewModel = function() {
 
     });
 
-    self.removeMarker = function() {
+    // self.hideMarkers = ko.computed(function () {
+    //     var query = self.query().toLowerCase();
 
-        var query = self.query().toLowerCase();
-        var name = locaitons.name.toLowerCase();
-        var queryIsInName = name.indexOf(query) >= 0
+    //     if (!query) {
+    //         return self.markersList
+    //     } else {
+    //         return ko.utils.arrayFilter(self.markersList, function(marker) {
+    //             var name = location.name.toLowerCase();
+    //             var queryIsInName = name.indexOf(query) >= 0
 
-        if(!query){
-            return self.marksList
-        } else if (queryIsInName < 0) {
-            self.locationsList[i].marker.setVisible(false);
-        }
+    //             return queryIsInName;
 
-    }
+    //             if (true) {
+    //                 self.locationsList.marker.setVisible(false);
+    //             }
+    //         })
+    //     }
+    // })
 
 
     // set up search function
@@ -443,16 +454,6 @@ var ViewModel = function() {
         var i, result;
 
         // ================ FOCUS ON THIS SNIPPET ===========================
-
-        // // reset everything
-        // self.infoWindow.close();
-        // // all markers will show on the screen
-        // self.markersList.forEach(function(element) {
-        //     element.setAnimation(null);
-        //     element.setMap(self.map);
-        // });
-
-
 
         // reset everything
         self.infoWindow.close();
@@ -463,8 +464,6 @@ var ViewModel = function() {
         });
 
         // ================= End OF SNIPPET ===============================
-
-
 
         // ================ FOCUS ON THIS SNIPPET ===========================
 
@@ -552,7 +551,6 @@ var ViewModel = function() {
             // add info windows
             self.makeFourSquareInfoWindow(i, marker);
           //  console.log(marker);
-            self.removeMarker()
         }
     };
 
