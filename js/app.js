@@ -408,19 +408,19 @@ var ViewModel = function() {
 
         if (!query) {
             self.locationsList.forEach(function(location) {
-                if (location.marker) location.marker.setVisible(true)
-            })
+                if (location.marker) location.marker.setVisible(true);
+            });
             return self.locationsList
         } else {
 
             return ko.utils.arrayFilter(self.locationsList, function(location) {
                 var name = location.name.toLowerCase();
-                var queryIsInName = name.indexOf(query) >= 0 // or !== -1
+                var queryIsInName = name.indexOf(query) >= 0; // or !== -1
 
                     location.marker.setVisible(queryIsInName);
 
                     return queryIsInName;
-            })
+            });
         }
     });
 
