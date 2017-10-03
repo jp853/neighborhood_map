@@ -403,24 +403,20 @@ var ViewModel = function() {
         console.log(query)
 
         if (!query) {
+            self.locationsList.forEach(function(location) {
+                if (location.marker) location.marker.setVisible(true)
+            })
             return self.locationsList
         } else {
 
             return ko.utils.arrayFilter(self.locationsList, function(location) {
-
                 var name = location.name.toLowerCase();
                 var queryIsInName = name.indexOf(query) >= 0 // or !== -1
 
-                for(var i = 0; i < self.locationsList.length; i++){
-                    if (queryIsInName === true) {
-                        self.locationsList[i].marker.setVisible(true)
-                        console.log(name, " - YOU SEE ME?")
-                    } else {
-                        self.locationsList[i].marker.setVisible(false)
-                        console.log(name, " - DON'T LOOK AT ME!")
-                    }
+                    location.marker.setVisible(queryIsInName);
+
                     return queryIsInName;
-                }
+              //  }
 
                 //console.log(name, queryIsInName);
                 // if (queryIsInName === true) {
