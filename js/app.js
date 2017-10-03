@@ -410,7 +410,7 @@ var ViewModel = function() {
             self.locationsList.forEach(function(location) {
                 if (location.marker) location.marker.setVisible(true);
             });
-            return self.locationsList
+            return self.locationsList;
         } else {
 
             return ko.utils.arrayFilter(self.locationsList, function(location) {
