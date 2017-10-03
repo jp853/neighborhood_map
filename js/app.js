@@ -336,7 +336,7 @@ var ViewModel = function() {
     });
 
     // use locations length in the view model for search queries and show functions
-    self.locationsListLength = self.locationsList.length;
+    // self.locationsListLength = self.locationsList.length;
 
     // make an array so we can push each marker into it
     self.markersList = [];
@@ -383,24 +383,28 @@ var ViewModel = function() {
         self.hideList();
     };
 
+    self.show = ko.observable(true);
+
     // hide list for smaller screens
     self.hideList = function() {
         if ($(window).width() < 750) {
-            $('.list-container').hide();
-            $('.show-locations').show();
+            self.show(false);
+            // $('.list-container').hide();
+            // $('.show-locations').show();
         }
     };
 
     // will show the full list on smaller screens when clicked
     self.showList = function() {
-        $('.list-container').show();
-        $('.show-locations').hide();
+        self.show(true);
+        // $('.list-container').show();
+        // $('.show-locations').hide();
     };
 
     self.search = ko.computed(function() {
         var query = self.query().toLowerCase();
 
-        console.log(query)
+        // console.log(query)
 
         if (!query) {
             self.locationsList.forEach(function(location) {
@@ -416,20 +420,39 @@ var ViewModel = function() {
                     location.marker.setVisible(queryIsInName);
 
                     return queryIsInName;
-              //  }
-
-                //console.log(name, queryIsInName);
-                // if (queryIsInName === true) {
-                //     console.log(name, 'Keep the marker the same')
-
-                // } else {
-                //     console.log(name, 'Time to go invisible')
-                // }
-
-                //return queryIsInName;
             })
         }
     });
+
+    // name is the category clicked by the user
+    self.setUpCategoryFilter = function(name) {
+        var i, result;
+
+        // reset everything
+        self.infoWindow.close();
+        // first show all markers and list items on screen
+        self.markersList.forEach(function(element) {
+            element.setAnimation(null);
+            element.setMap(self.map);
+        });
+        $('.list-item').show();
+
+        // display all each location type depending on what filter
+        // the user clicks on
+        if (name !== 'All') {
+            for (i = 0; i < self.locationsList.length; i++) {
+                // save each location's type
+                result = self.locationsList[i].type;
+                // hide marker if it is not the clicked
+                // location type
+                if (result !== name) {
+                    self.markersList[i].setMap(null);
+
+                    $('#' + i).hide();
+                }
+            }
+        }
+    };
 
 
 
@@ -465,37 +488,9 @@ var ViewModel = function() {
 
 
     // if changes in the search box, call the search function
-    self.query.subscribe(self.search);
+    self.query.subscribe(self.search); */
 
-    // name is the category clicked by the user
-    self.setUpCategoryFilter = function(name) {
-        var i, result;
 
-        // reset everything
-        self.infoWindow.close();
-        // first show all markers and list items on screen
-        self.markersList.forEach(function(element) {
-            element.setAnimation(null);
-            element.setMap(self.map);
-        });
-        $('.list-item').show();
-
-        // display all each location type depending on what filter
-        // the user clicks on
-        if (name !== 'All') {
-            for (i = 0; i < self.locationsListLength; i++) {
-                // save each location's type
-                result = self.locationsList[i].type;
-                // hide marker if it is not the clicked
-                // location type
-                if (result !== name) {
-                    self.markersList[i].setMap(null);
-
-                    $('#' + i).hide();
-                }
-            }
-        }
-    }; */
 
     // initialize the map
     self.initMap = function() {

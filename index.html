@@ -41,7 +41,7 @@
               <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand">Moab Adventures</a>
-            <a class="navbar-brand"><div data-bind="click: showList" class="show-locations">List Locations</div></a>
+            <a class="navbar-brand"><div data-bind="click: show" class="show-locations">List Locations</div></a>
 
           </div>
 
@@ -72,7 +72,7 @@
 
     <main id="map"></main>
 
-    <aside class="list-container">
+    <aside class="list-container" data-bind="visible: show">
       <ul data-bind="foreach: search" class="list">
         <li data-bind="text: name, click: $parent.makeListClickable.bind($data, $index), attr: {id: $index}" class="list-item"></li>
 
