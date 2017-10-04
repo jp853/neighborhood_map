@@ -1,6 +1,6 @@
-if (typeof google === 'undefined') {
-    alert('ERROR: Google maps failed to load');
-}
+// if (typeof google === 'undefined') {
+//     alert('ERROR: Google maps failed to load. Try Reloading.');
+// }
 
 /* -- Model -- */
 
