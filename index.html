@@ -12,18 +12,15 @@
 
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 
-
-
-
-
     <script src="js/knockout-3.4.2.js"></script>
 
+    <script src="js/jquery-3.2.1.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+    </script>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <script async src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7DyFmMTTWpt7K9VAFWY9uXFrsj5fTYo"></script>
-
+    <script async defer src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7DyFmMTTWpt7K9VAFWY9uXFrsj5fTYo"></script>
 
 
 </head>
@@ -50,7 +47,7 @@
             <ul class="nav navbar-nav">
               <li>
                 <span data-bind="foreach: filterLocationsList" class="">
-                  <button data-bind="click: function(data, event) {$parent.setUpCategoryFilter(name, data, event);}" type="button" class="btn btn-default-lg">
+                  <button data-bind="click: function(data, event) {$parent.filteredLocations(name, data, event);}" type="button" class="btn btn-default-lg">
                     <span data-bind="text: name"></span>
                     <span><img data-bind="attr: {src: $data.image}" class="filter-img"></span>
                   </button>
@@ -79,13 +76,7 @@
       </ul>
     </aside>
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
-    </script>
-
-
     <script src="js/app.js"></script>
-
 
 </body>
 </html>
