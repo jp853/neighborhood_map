@@ -424,35 +424,59 @@ var ViewModel = function() {
         }
     });
 
-    // name is the category clicked by the user
-    self.setUpCategoryFilter = function(name) {
-        var i, result;
+/* ======================= Start New Filter Function ====================== */
 
-        // reset everything
-        self.infoWindow.close();
-        // first show all markers and list items on screen
-        self.markersList.forEach(function(element) {
-            element.setAnimation(null);
-            element.setMap(self.map);
-        });
-        $('.list-item').show();
+    self.setUpCategoryFilter = ko.observable("All");
 
-        // display all each location type depending on what filter
-        // the user clicks on
-        if (name !== 'All') {
-            for (i = 0; i < self.locationsList.length; i++) {
-                // save each location's type
-                result = self.locationsList[i].type;
-                // hide marker if it is not the clicked
-                // location type
-                if (result !== name) {
-                    self.markersList[i].setMap(null);
+    self.filteredLocations = ko.computed(function() {
+        var category = self.setUpCategoryFilter();
 
-                    $('#' + i).hide();
-                }
-            }
+        if(category === "All") {
+            return self.locationsList;
+        } else {
+            var tempList = self.locationsList.slice();
+
+            return tempList.filter(function(location) {
+                return location.type === category;
+            });
         }
-    };
+    });
+
+/* ======================= End New Filter Function ====================== */
+
+/* ======================= Start Older Filter Function ====================== */
+
+    // // name is the category clicked by the user
+    // self.setUpCategoryFilter = function(name) {
+    //     var i, result;
+
+    //     // reset everything
+    //     self.infoWindow.close();
+    //     // first show all markers and list items on screen
+    //     self.markersList.forEach(function(element) {
+    //         element.setAnimation(null);
+    //         element.setMap(self.map);
+    //     });
+    //     $('.list-item').show();
+
+    //     // display all each location type depending on what filter
+    //     // the user clicks on
+    //     if (name !== 'All') {
+    //         for (i = 0; i < self.locationsList.length; i++) {
+    //             // save each location's type
+    //             result = self.locationsList[i].type;
+    //             // hide marker if it is not the clicked
+    //             // location type
+    //             if (result !== name) {
+    //                 self.markersList[i].setMap(null);
+
+    //                 $('#' + i).hide();
+    //             }
+    //         }
+    //     }
+    // };
+
+/* ======================= End Older Filter Function ====================== */
 
 
 
@@ -528,15 +552,46 @@ var ViewModel = function() {
     };
 
     // prevent form from submitting when user presses enter key
-    $(document).on('keypress', 'form', function(e) {
-        var code = e.keyCode || e.which;
+    // $(document).on('keypress', 'form', function(e) {
+    //     var code = e.keyCode || e.which;
 
-        if (code === 13) {
-            e.preventDefault();
+    //     if (code === 13) {
+    //         e.preventDefault();
 
-            return false;
+    //         return false;
+    //     }
+    // });
+
+    ko.bindingHandlers.hotkey = {
+    init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+      var options = ko.utils.unwrapObservable(valueAccessor());
+
+      if(typeof options === "object") {
+        var trigger = options.trigger.toLowerCase();
+        var action = options.action;
+      } else {
+        var trigger = options;
+      }
+
+      var shift = trigger.indexOf("shift") > -1;
+      var ctrl = trigger.indexOf("ctrl") > -1;
+      var alt = trigger.indexOf("alt") > -1;
+      var key = trigger.substring(trigger.length-1);
+
+      $(document).on("keydown", function(e) {
+        if(e.shiftKey === shift && e.ctrlKey  === ctrl && e.altKey === alt && e.which === key.toUpperCase().charCodeAt(13)) {
+          // hotkey hit
+         // console.log(action);
+          if(action && typeof action === "function") {
+            action(element);
+          } else {
+            $(element).click(); // trigger the element click event
+          }
+          e.preventDefault();
         }
-    });
+      });
+    }
+};
 };
 
 // refrence the View Model instance
