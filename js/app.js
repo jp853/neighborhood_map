@@ -422,21 +422,15 @@ var ViewModel = function() {
 
 /* ======================= Start New Filter Function ====================== */
 
-    self.setUpCategoryFilter = ko.observable("All");
+    self.filterValues = ["All", "Bike Shop", "Outfitter", "Food"];
 
-    self.filteredLocations = ko.computed(function() {
-        var category = self.setUpCategoryFilter();
+    self.radioFilterObservable = ko.observable(["All"]);
 
-        if(category === "All") {
-            return self.locationsList;
-        } else {
-            var tempList = self.locationsList.slice();
 
-            return tempList.filter(function(location) {
-                return location.type === category;
-            });
-        }
-    });
+
+
+
+
 
 /* ======================= End New Filter Function ====================== */
 

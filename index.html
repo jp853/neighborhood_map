@@ -45,14 +45,31 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse filter-list" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li>
+                <li>
+                    Radio Button Selected:
+                </li>
+                <span>
+                    <strong>
+                        <li  data-bind="text: radioFilterObservable"></li>
+                    </strong>
+                </span>
+
+
+                <li>
+                    <label><input type="radio" value="All" data-bind="checked: radioFilterObservable"/>All</label>
+                    <label><input type="radio" value="Bike Shop" data-bind="checked: radioFilterObservable"/>Bike Shop</label>
+                    <label><input type="radio" value="Outfitter" data-bind="checked: radioFilterObservable"/>Outfitter</label>
+                    <label><input type="radio" value="Food" data-bind="checked: radioFilterObservable"/>Food</label>
+                <li>
+
+<!--               <li>
                 <span data-bind="foreach: filterLocationsList" class="">
-                  <button data-bind="click: function(data, event) {$parent.filteredLocations(name, data, event);}" type="button" class="btn btn-default-lg">
+                  <button data-bind="click: function(data, event) {$parent.setUpCategoryFilter(name, data, event);}" type="button" class="btn btn-default-lg">
                     <span data-bind="text: name"></span>
                     <span><img data-bind="attr: {src: $data.image}" class="filter-img"></span>
                   </button>
                 </span>
-              </li>
+              </li> -->
             </ul>
 
             <form class="navbar-form navbar-right" role="search">
