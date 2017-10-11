@@ -335,9 +335,6 @@ var ViewModel = function() {
         self.locationsList.push(element);
     });
 
-    // use locations length in the view model for search queries and show functions
-    // self.locationsListLength = self.locationsList.length;
-
     // make an array so we can push each marker into it
     self.markersList = [];
 
@@ -412,7 +409,6 @@ var ViewModel = function() {
             });
             return self.locationsList;
         } else {
-
             return ko.utils.arrayFilter(self.locationsList, function(location) {
                 var name = location.name.toLowerCase();
                 var queryIsInName = name.indexOf(query) >= 0; // or !== -1
@@ -477,42 +473,6 @@ var ViewModel = function() {
     // };
 
 /* ======================= End Older Filter Function ====================== */
-
-
-
-    // set up search function
-/*    self.search = function() {
-        var searchValue = new RegExp(self.query(), 'i');
-        var i, result;
-
-        // reset everything
-        self.infoWindow.close();
-        // all markers will show on the screen
-        self.markersList.forEach(function(element) {
-            element.setAnimation(null);
-            element.setMap(self.map);
-        });
-
-
-
-        // all list items will be displayed on the screen
-        $('.list-item').show();
-
-        for (i = 0; i < self.locationsListLength; i++) {
-            // check if location matches search query
-            result = searchValue.test(self.locationsList[i].name);
-            // hide marker if search query does not match
-            if (result === false) {
-                self.markersList[i].setMap(null);
-
-                $('#' + i).hide();
-            }
-        }
-    };
-
-
-    // if changes in the search box, call the search function
-    self.query.subscribe(self.search); */
 
 
 
