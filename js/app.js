@@ -427,6 +427,35 @@ var ViewModel = function() {
     self.radioFilterObservable = ko.observable(["All"]);
 
 
+    self.categoryList = [];
+
+    // dynamically retrieve categories for drop down list
+    Model.locations.map(function(location){
+        if(!self.categoryList.includes(location.type)) {
+            self.categoryList.push(location.type);
+        }
+    });
+
+    self.locationArray = ko.observableArray(Model.locations);
+    //observable array for drop down list
+    self.categories = ko.observableArray(self.categoryList);
+    //this holds the selected value for the list
+    self.selectedCategory = ko.observable();
+
+    /*
+        Filter Function, return filtered location
+        by selected category from <select>
+    */
+
+    self.filterLocation = ko.computed(function () {
+        if(!self.selectedCategory()) {
+            return self.locationArray();
+        } else {
+            return ko.utils.arrayFilter(self.locationArray(), function(location) {
+                return (location.type === self.selectedCategory());
+            });
+        }
+    });
 
 
 

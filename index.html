@@ -46,6 +46,18 @@
           <div class="collapse navbar-collapse filter-list" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
+                    <select data-bind = "options: categories,
+                                         value: selectedCategory">
+                    </select>
+                </li>
+                <p>Filter found <span data-bind= "text:filterLocation().length"></span> items</p>
+
+                <ul data-bind = "forEach: filterLocation">
+                    <li>
+                        <span data-bind= "text: $data.name"></span>
+                    </li>
+                </ul>
+<!--                 <li>
                     Radio Button Selected:
                 </li>
                 <span>
@@ -60,7 +72,7 @@
                     <label><input type="radio" value="Bike Shop" data-bind="checked: radioFilterObservable"/>Bike Shop</label>
                     <label><input type="radio" value="Outfitter" data-bind="checked: radioFilterObservable"/>Outfitter</label>
                     <label><input type="radio" value="Food" data-bind="checked: radioFilterObservable"/>Food</label>
-                <li>
+                </li> -->
 
 <!--               <li>
                 <span data-bind="foreach: filterLocationsList" class="">
