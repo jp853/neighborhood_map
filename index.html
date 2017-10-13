@@ -45,6 +45,27 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse filter-list" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+                <!-- =============KO Binding with filter function ========== -->
+
+<!--                 <div class="container">
+                    <div class="filter">
+                        <label><input type="radio" name="category" checked value="All" data-bind="checked: selectedCategory" /> All</label>
+                        <label><input type="radio" name="category" value="Bike Shop" data-bind="checked: selectedCategory" /> Bike Shop</label>
+                        <label><input type="radio" name="category" value="Outfitter" data-bind="checked: selectedCategory" /> Outfitter</label>
+                        <label><input type="radio" name="category" value="Food" data-bind="checked: selectedCategory" /> Food</label>
+                    </div>
+
+                    <ul data-bind="foreach: filteredLocation">
+                        <li data-bind="text: name"></li>
+                        <li data-bind="text: type"></li>
+                    </ul>
+                </div>
+ -->
+
+                <!-- ============= KO BINDING WITH MAP FUNCTION ============ -->
+
+
+
                 <li>
                     <select data-bind = "options: categories,
                                          value: selectedCategory">
@@ -57,6 +78,10 @@
                         <span data-bind= "text: $data.name"></span>
                     </li>
                 </ul>
+
+                <!-- ==================RADIO BUTTON EXAMPLE =============== -->
+
+
 <!--                 <li>
                     Radio Button Selected:
                 </li>
@@ -74,14 +99,20 @@
                     <label><input type="radio" value="Food" data-bind="checked: radioFilterObservable"/>Food</label>
                 </li> -->
 
-<!--               <li>
+
+
+                <!-- =========== ORIGINAL KO BINDINGS ============ -->
+
+
+
+              <li>
                 <span data-bind="foreach: filterLocationsList" class="">
                   <button data-bind="click: function(data, event) {$parent.setUpCategoryFilter(name, data, event);}" type="button" class="btn btn-default-lg">
                     <span data-bind="text: name"></span>
                     <span><img data-bind="attr: {src: $data.image}" class="filter-img"></span>
                   </button>
                 </span>
-              </li> -->
+              </li>
             </ul>
 
             <form class="navbar-form navbar-right" role="search">

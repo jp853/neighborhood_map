@@ -323,6 +323,8 @@ var ViewModel = function() {
     // use knockout js for search query changes
     self.query = ko.observable('');
 
+    self.selectedCategory = ko.observable('All');
+
     // use knockout js to put location type into the view model
     self.filterLocationsList = [];
     Model.filterLocationType.forEach(function(element) {
@@ -400,10 +402,12 @@ var ViewModel = function() {
 
     self.search = ko.computed(function() {
         var query = self.query().toLowerCase();
+        var selectedCategory = self.selectedCategory();
 
         // console.log(query)
-
-        if (!query) {
+        console.log(selectedCategory === 'All', !query)
+       // console.log(self.selectedCategory())
+        if (!query && selectedCategory === 'All') {
             self.locationsList.forEach(function(location) {
                 if (location.marker) location.marker.setVisible(true);
             });
@@ -411,11 +415,11 @@ var ViewModel = function() {
         } else {
             return ko.utils.arrayFilter(self.locationsList, function(location) {
                 var name = location.name.toLowerCase();
-                var queryIsInName = name.indexOf(query) >= 0; // or !== -1
+                var match= name.indexOf(query) >= 0 && (location.type === selectedCategory || selectedCategory === 'All'); // or !== -1
 
-                    location.marker.setVisible(queryIsInName);
+                    location.marker.setVisible(match);
 
-                    return queryIsInName;
+                    return match;
             });
         }
     });
@@ -430,6 +434,8 @@ var ViewModel = function() {
     self.categoryList = [];
 
     // dynamically retrieve categories for drop down list
+    self.categoryList.push('All');
+
     Model.locations.map(function(location){
         if(!self.categoryList.includes(location.type)) {
             self.categoryList.push(location.type);
@@ -440,7 +446,6 @@ var ViewModel = function() {
     //observable array for drop down list
     self.categories = ko.observableArray(self.categoryList);
     //this holds the selected value for the list
-    self.selectedCategory = ko.observable();
 
     /*
         Filter Function, return filtered location
@@ -582,5 +587,3 @@ var myViewModel = new ViewModel();
 
 // use knockout js to organize mvvm
 ko.applyBindings(myViewModel);
-
-
