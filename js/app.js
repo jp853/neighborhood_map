@@ -424,8 +424,6 @@ var ViewModel = function() {
         }
     });
 
-/* ======================= Start New Filter Function ====================== */
-
 
     // Set categoryList with an empty array so
     // the Model.locations array can be 'mapped'
@@ -460,7 +458,6 @@ var ViewModel = function() {
             });
         }
     });
-/* ======================= End New Filter Function ====================== */
 
     // initialize the map
     self.initMap = function() {

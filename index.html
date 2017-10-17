@@ -12,15 +12,15 @@
 
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 
-    <!-- <script src="js/knockout-3.4.2.js"></script>
+    <script src="js/knockout-3.4.2.js"></script>
 
     <script src="js/jquery-3.2.1.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
-    </script> -->
+    </script>
 
 
-   <!--  <script async defer src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7DyFmMTTWpt7K9VAFWY9uXFrsj5fTYo"></script> -->
+    <script async defer src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7DyFmMTTWpt7K9VAFWY9uXFrsj5fTYo"></script>
 
 
 </head>
@@ -47,21 +47,24 @@
             <ul class="nav navbar-nav">
 
                 <!-- ============= KO BINDING WITH MAP FUNCTION ============ -->
-                <li>Category</li>
-                <li>
+                <li>Select A Category</li>
+
+
                     <select data-bind = "options: categories,
+                                         optionsCaption: 'Choose Category',
                                          value: selectedCategory">
                     </select>
-                </li>
 
 
-<!--                 <ul data-bind = "forEach: filterLocation">
+
+                <ul data-bind = "forEach: filterLocation">
                     <li>
                         <span data-bind= "text: $data.name"></span>
                     </li>
-                </ul> -->
+                </ul>
 
                 <!-- ========== New Buttons with KO Map function =========== -->
+
 
 
                 <!-- =========== ORIGINAL KO BINDINGS ============ -->
@@ -98,16 +101,7 @@
       </ul>
     </aside>
 
-    <script src="js/knockout-3.4.2.js"></script>
-
-    <script src="js/jquery-3.2.1.min.js"></script>
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
-    </script>
-
     <script src="js/app.js"></script>
-
-    <script async defersrc= "https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7DyFmMTTWpt7K9VAFWY9uXFrsj5fTYo" onerror="googleMapError()"></script>
 
 </body>
 </html>
