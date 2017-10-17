@@ -326,10 +326,10 @@ var ViewModel = function() {
     self.selectedCategory = ko.observable('All');
 
     // use knockout js to put location type into the view model
-    self.filterLocationsList = [];
-    Model.filterLocationType.forEach(function(element) {
-        self.filterLocationsList.push(element);
-    });
+    // self.filterLocationsList = [];
+    // Model.filterLocationType.forEach(function(element) {
+    //     self.filterLocationsList.push(element);
+    // });
 
     // use knockout js to put the locations into a list
     self.locationsList = [];
@@ -340,9 +340,7 @@ var ViewModel = function() {
     // make an array so we can push each marker into it
     self.markersList = [];
 
-   // console.log(self.markersList);
-
-    // animate mare and show info window when a marker is clicked
+    // animate marker and show info window when a marker is clicked
     self.makeFourSquareInfoWindow = function(i, markerCopy) {
         // make a click event hander for each marker
         google.maps.event.addListener(markerCopy, 'click', function() {
@@ -400,13 +398,15 @@ var ViewModel = function() {
         // $('.show-locations').hide();
     };
 
+    // Use knockout to set up search function that will
+    // return a filtered query list and set marker
+    // visibility.
     self.search = ko.computed(function() {
         var query = self.query().toLowerCase();
         var selectedCategory = self.selectedCategory();
 
-        // console.log(query)
         console.log(selectedCategory === 'All', !query)
-       // console.log(self.selectedCategory())
+
         if (!query && selectedCategory === 'All') {
             self.locationsList.forEach(function(location) {
                 if (location.marker) location.marker.setVisible(true);
@@ -415,7 +415,7 @@ var ViewModel = function() {
         } else {
             return ko.utils.arrayFilter(self.locationsList, function(location) {
                 var name = location.name.toLowerCase();
-                var match= name.indexOf(query) >= 0 && (location.type === selectedCategory || selectedCategory === 'All'); // or !== -1
+                var match= name.indexOf(query) >= 0 && (location.type === selectedCategory || selectedCategory === 'All');
 
                     location.marker.setVisible(match);
 
@@ -426,11 +426,10 @@ var ViewModel = function() {
 
 /* ======================= Start New Filter Function ====================== */
 
-    self.filterValues = ["All", "Bike Shop", "Outfitter", "Food"];
 
-    self.radioFilterObservable = ko.observable(["All"]);
-
-
+    // Set categoryList with an empty array so
+    // the Model.locations array can be 'mapped'
+    // into it.
     self.categoryList = [];
 
     // dynamically retrieve categories for drop down list
@@ -461,48 +460,7 @@ var ViewModel = function() {
             });
         }
     });
-
-
-
-
-
 /* ======================= End New Filter Function ====================== */
-
-/* ======================= Start Older Filter Function ====================== */
-
-    // // name is the category clicked by the user
-    // self.setUpCategoryFilter = function(name) {
-    //     var i, result;
-
-    //     // reset everything
-    //     self.infoWindow.close();
-    //     // first show all markers and list items on screen
-    //     self.markersList.forEach(function(element) {
-    //         element.setAnimation(null);
-    //         element.setMap(self.map);
-    //     });
-    //     $('.list-item').show();
-
-    //     // display all each location type depending on what filter
-    //     // the user clicks on
-    //     if (name !== 'All') {
-    //         for (i = 0; i < self.locationsList.length; i++) {
-    //             // save each location's type
-    //             result = self.locationsList[i].type;
-    //             // hide marker if it is not the clicked
-    //             // location type
-    //             if (result !== name) {
-    //                 self.markersList[i].setMap(null);
-
-    //                 $('#' + i).hide();
-    //             }
-    //         }
-    //     }
-    // };
-
-/* ======================= End Older Filter Function ====================== */
-
-
 
     // initialize the map
     self.initMap = function() {
@@ -580,6 +538,10 @@ var ViewModel = function() {
       });
     }
 };
+};
+
+googleMapError = function googleMapError() {
+    alert ('Google Maps could not load. Please refresh the page to try again.')
 };
 
 // refrence the View Model instance
