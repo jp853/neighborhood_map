@@ -19,10 +19,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
     </script>
 
-
-    <script async defer src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7DyFmMTTWpt7K9VAFWY9uXFrsj5fTYo"></script>
-
-
 </head>
 <body>
 
@@ -57,11 +53,11 @@
 
 
 
-                <ul data-bind = "forEach: filterLocation">
+             <!--    <ul data-bind = "forEach: filterLocation">
                     <li>
                         <span data-bind= "text: $data.name"></span>
                     </li>
-                </ul>
+                </ul> -->
 
                 <!-- ========== New Buttons with KO Map function =========== -->
 
@@ -102,6 +98,6 @@
     </aside>
 
     <script src="js/app.js"></script>
-
+    <script async defer src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7DyFmMTTWpt7K9VAFWY9uXFrsj5fTYo&callback=myViewModel.initMap" onerror="googleMapError()"></script>
 </body>
 </html>

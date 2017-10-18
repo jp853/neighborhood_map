@@ -6,74 +6,74 @@
 
 var Model = {
     // set up Controls for map and styles
-    mapControlsAndStyles: {
-        center: {
-            lat: 38.5733155,
-            lng: -109.54983950000002
-        },
-        zoom: 14,
-        mapTypeId: google.maps.MapTypeId.TERRAIN,
-        mapTypeControlOptions: {
-            position: google.maps.ControlPosition.TOP_CENTER
-        },
-        zoomControlOptions: {
-            position: google.maps.ControlPosition.RIGHT_CENTER
-        },
-        styles: [{
-            featureType: 'water',
-            stylers: [{
-                color: '#19a0d8'
-            }]
-        }, {
-            featureType: 'road.highway',
-            elementType: 'geometry.stroke',
-            stylers: [{
-                    color: '#efe9e4'
-                },
-                {
-                    lightness: -40
-                }
-            ]
-        }, {
-            featureType: 'road.highway',
-            elementType: 'labels.icon',
-            stylers: [{
-                visibility: 'on'
-            }]
-        }, {
-            featureType: 'water',
-            elementType: 'labels.text.stroke',
-            stylers: [{
-                lightness: 100
-            }]
-        }, {
-            featureType: 'water',
-            elementType: 'labels.text.fill',
-            stylers: [{
-                lightness: -100
-            }]
-        }, {
-            featureType: 'poi',
-            elementType: 'geometry',
-            stylers: [{
-                    visibility: 'on'
-                },
-                {
-                    color: '#f0e4d3'
-                }
-            ]
-        }, {
-            featureType: 'road.highway',
-            elementType: 'geometry.fill',
-            stylers: [{
-                    color: '#efe9e4'
-                },
-                {
-                    lightness: -25
-                }
-            ]
-        }]
-    },
+    // mapControlsAndStyles: {
+    //     center: {
+    //         lat: 38.5733155,
+    //         lng: -109.54983950000002
+    //     },
+    //     zoom: 14,
+    //     mapTypeId: google.maps.MapTypeId.TERRAIN,
+    //     mapTypeControlOptions: {
+    //         position: google.maps.ControlPosition.TOP_CENTER
+    //     },
+    //     zoomControlOptions: {
+    //         position: google.maps.ControlPosition.RIGHT_CENTER
+    //     },
+    //     styles: [{
+    //         featureType: 'water',
+    //         stylers: [{
+    //             color: '#19a0d8'
+    //         }]
+    //     }, {
+    //         featureType: 'road.highway',
+    //         elementType: 'geometry.stroke',
+    //         stylers: [{
+    //                 color: '#efe9e4'
+    //             },
+    //             {
+    //                 lightness: -40
+    //             }
+    //         ]
+    //     }, {
+    //         featureType: 'road.highway',
+    //         elementType: 'labels.icon',
+    //         stylers: [{
+    //             visibility: 'on'
+    //         }]
+    //     }, {
+    //         featureType: 'water',
+    //         elementType: 'labels.text.stroke',
+    //         stylers: [{
+    //             lightness: 100
+    //         }]
+    //     }, {
+    //         featureType: 'water',
+    //         elementType: 'labels.text.fill',
+    //         stylers: [{
+    //             lightness: -100
+    //         }]
+    //     }, {
+    //         featureType: 'poi',
+    //         elementType: 'geometry',
+    //         stylers: [{
+    //                 visibility: 'on'
+    //             },
+    //             {
+    //                 color: '#f0e4d3'
+    //             }
+    //         ]
+    //     }, {
+    //         featureType: 'road.highway',
+    //         elementType: 'geometry.fill',
+    //         stylers: [{
+    //                 color: '#efe9e4'
+    //             },
+    //             {
+    //                 lightness: -25
+    //             }
+    //         ]
+    //     }]
+    // },
 
 
     // locations that would normally be imported for a database
@@ -126,8 +126,20 @@ var Model = {
     fourSquareLocationData: function() {
         // construct base url
         var fSData = Model.fourSquareInfo;
-        var centerCanvas = Model.mapControlsAndStyles.center;
+      //  var centerCanvas = Model.mapControlsAndStyles.center;
         // construct base url to search with supplied coordinates
+        // var baseURL = 'https://api.foursquare.com/v2/venues/search?client_id=' +
+        //     fSData.clientID + '&client_secret=' +
+        //     fSData.clientSecret + '&v=' +
+        //     fSData.version + '&ll=' +
+        //     centerCanvas.lat + ',' +
+        //     centerCanvas.lng + '&query=';
+
+        var centerCanvas = {
+             lat: 38.5733155,
+             lng: -109.54983950000002
+        };
+
         var baseURL = 'https://api.foursquare.com/v2/venues/search?client_id=' +
             fSData.clientID + '&client_secret=' +
             fSData.clientSecret + '&v=' +
@@ -164,16 +176,22 @@ var Model = {
                         lng: lng
                     };
 
+                    myViewModel.makeMarker(location);
+
                     location.fourSquareID = venue_id;
 
                     counter++;
 
                     if (counter === locations.length) {
                         clearTimeout(timeout);
-                        myViewModel.initMap();
+                        //myViewModel.initMap();
                     }
                 }
-            });
+            }) /* -- .done(function(data) {
+
+            }).fail(functoin(error) {
+
+            }) -- */
         }
 
         // Four Square ajax request for supplied locations
@@ -459,11 +477,100 @@ var ViewModel = function() {
         }
     });
 
+    self.makeMarker = function(location) {
+            // make a new marker
+            var marker = new google.maps.Marker({
+                position: location.coordinates,
+                icon: location.icon
+            });
+
+            console.log(marker)
+            //add marker object to each locations array
+            location.marker = marker;
+
+            marker.setMap(self.map);
+            // add each marker to an array
+            self.markersList.push(marker);
+            // add info windows
+            self.makeFourSquareInfoWindow(0, marker);
+          //  console.log(marker);
+    };
+
     // initialize the map
     self.initMap = function() {
         // create the map
+
+
+    var mapControlsAndStyles = {
+        center: {
+            lat: 38.5733155,
+            lng: -109.54983950000002
+        },
+        zoom: 14,
+        mapTypeId: google.maps.MapTypeId.TERRAIN,
+        mapTypeControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER
+        },
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_CENTER
+        },
+        styles: [{
+            featureType: 'water',
+            stylers: [{
+                color: '#19a0d8'
+            }]
+        }, {
+            featureType: 'road.highway',
+            elementType: 'geometry.stroke',
+            stylers: [{
+                    color: '#efe9e4'
+                },
+                {
+                    lightness: -40
+                }
+            ]
+        }, {
+            featureType: 'road.highway',
+            elementType: 'labels.icon',
+            stylers: [{
+                visibility: 'on'
+            }]
+        }, {
+            featureType: 'water',
+            elementType: 'labels.text.stroke',
+            stylers: [{
+                lightness: 100
+            }]
+        }, {
+            featureType: 'water',
+            elementType: 'labels.text.fill',
+            stylers: [{
+                lightness: -100
+            }]
+        }, {
+            featureType: 'poi',
+            elementType: 'geometry',
+            stylers: [{
+                    visibility: 'on'
+                },
+                {
+                    color: '#f0e4d3'
+                }
+            ]
+        }, {
+            featureType: 'road.highway',
+            elementType: 'geometry.fill',
+            stylers: [{
+                    color: '#efe9e4'
+                },
+                {
+                    lightness: -25
+                }
+            ]
+        }]
+    };
         var mapCanvas = document.getElementById('map');
-        self.map = new google.maps.Map(mapCanvas, Model.mapControlsAndStyles);
+        self.map = new google.maps.Map(mapCanvas, mapControlsAndStyles);
 
         // define variables for the map
         var locations = self.locationsList;
@@ -475,23 +582,24 @@ var ViewModel = function() {
         // console.log(locationsLength);
 
         // make markers with info windows
-        for (i = 0; i < locations.length; i++) {
-            // make a new marker
-            marker = new google.maps.Marker({
-                position: locations[i].coordinates,
-                icon: locations[i].icon
-            });
+        // for (i = 0; i < locations.length; i++) {
+        //     // make a new marker
+        //     marker = new google.maps.Marker({
+        //         position: locations[i].coordinates,
+        //         icon: locations[i].icon
+        //     });
 
-            //add marker object to each locations array
-            locations[i].marker = marker;
+        //     console.log(marker)
+        //     //add marker object to each locations array
+        //     locations[i].marker = marker;
 
-            marker.setMap(self.map);
-            // add each marker to an array
-            self.markersList.push(marker);
-            // add info windows
-            self.makeFourSquareInfoWindow(i, marker);
-          //  console.log(marker);
-        }
+        //     marker.setMap(self.map);
+        //     // add each marker to an array
+        //     self.markersList.push(marker);
+        //     // add info windows
+        //     self.makeFourSquareInfoWindow(i, marker);
+        //   //  console.log(marker);
+        // }
     };
 
     // prevent form from submitting when user presses enter key
@@ -538,7 +646,7 @@ var ViewModel = function() {
 };
 
 googleMapError = function googleMapError() {
-    alert ('Google Maps could not load. Please refresh the page to try again.')
+    alert ('Google Maps failed to load. Please refresh the page to try again.')
 };
 
 // refrence the View Model instance
@@ -546,3 +654,4 @@ var myViewModel = new ViewModel();
 
 // use knockout js to organize mvvm
 ko.applyBindings(myViewModel);
+
