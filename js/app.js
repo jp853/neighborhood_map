@@ -1,7 +1,7 @@
 /* -- Model -- */
 var Model = {
 
-    // locations that would normally be imported for a database
+    // locations that would normally be imported from a database
     locations: [{
             name: 'Chile Pepper Bike Shop',
             type: 'Bike Shop'
@@ -49,22 +49,16 @@ var Model = {
 
     // Find Four Square's lat/lng data for each location and place onto map
     fourSquareLocationData: function() {
-        // construct base url
+        // make Four Square variable that contains api credentials
         var fSData = Model.fourSquareInfo;
-        //  var centerCanvas = Model.mapControlsAndStyles.center;
-        // construct base url to search with supplied coordinates
-        // var baseURL = 'https://api.foursquare.com/v2/venues/search?client_id=' +
-        //     fSData.clientID + '&client_secret=' +
-        //     fSData.clientSecret + '&v=' +
-        //     fSData.version + '&ll=' +
-        //     centerCanvas.lat + ',' +
-        //     centerCanvas.lng + '&query=';
 
+        // set the center of the map
         var centerCanvas = {
             lat: 38.5733155,
             lng: -109.54983950000002
         };
 
+        // construct the base url for getData()
         var baseURL = 'https://api.foursquare.com/v2/venues/search?client_id=' +
             fSData.clientID + '&client_secret=' +
             fSData.clientSecret + '&v=' +
@@ -75,13 +69,13 @@ var Model = {
         // set variables for ajax request
         var i, fullURL, fsDataObject, lat, lng, venue_id;
         var locations = Model.locations;
-        var counter = 0;
+        //var counter = 0;
 
-        var timeout = setTimeout(function() {
-            alert('ERROR: Failed to get location resources');
-        }, 5000);
+        // var timeout = setTimeout(function() {
+        //     alert('ERROR: Failed to get location resources');
+        // }, 5000);
 
-
+        // ajax request for location data
         function getData(fullURL, i, location) {
             $.ajax(fullURL, {
                 i: i,
@@ -105,19 +99,18 @@ var Model = {
 
                     location.fourSquareID = venue_id;
 
-                    counter++;
+                    //counter++;
 
-                    if (counter === locations.length) {
-                        clearTimeout(timeout);
-                        //myViewModel.initMap();
-                    }
+                    // if (counter === locations.length) {
+                    //     clearTimeout(timeout);
+                    //     //myViewModel.initMap();
+                    // }
                 }
+            })  .done(function(data) {
+                // Successful
+            })  .fail(function(error) {
+                alert('Error: Failed to get location resources.');
             })
-            /* -- .done(function(data) {
-
-                       }).fail(functoin(error) {
-
-                       }) -- */
         }
 
         // Four Square ajax request for supplied locations
@@ -169,7 +162,7 @@ var Model = {
             alert('ERROR: Failed to get Foursquare location data');
         }, 5000);
 
-        // ajax request for location details
+        // ajax request for location description
         $.ajax(fullURL, {
             dataType: 'jsonp',
             success: function(data) {
@@ -228,31 +221,12 @@ var Model = {
                         '</div>'
                 });
 
-                clearTimeout(timeout);
+                //clearTimeout(timeout);
                 // set info window to correct marker using the View Model
                 myViewModel.initFourSqureInfoWindow(markerCopy);
             }
         });
-    },
-
-    // categories to filter the locations
-    filterLocationType: [{
-            name: 'All',
-            image: null
-        },
-        {
-            name: 'Bike Shop',
-            image: 'https://maps.google.com/mapfiles/kml/shapes/cycling.png',
-        },
-        {
-            name: 'Outfitter',
-            image: 'https://maps.google.com/mapfiles/kml/shapes/trail.png'
-        },
-        {
-            name: 'Food',
-            image: 'https://maps.google.com/mapfiles/kml/shapes/snack_bar.png'
-        }
-    ]
+    }
 };
 
 
@@ -318,23 +292,48 @@ var ViewModel = function() {
         self.hideList();
     };
 
-    self.show = ko.observable(true);
+    // make and observable to show and hide the locations list
+    self.show = ko.observable(false);
+    self.showButtonValue = ko.observable('Show List');
 
-    // hide list for smaller screens
-    self.hideList = function() {
-        if ($(window).width() < 750) {
+    self.showList = function() {
+        if(self.show() === false){
+            self.show(true);
+            self.showButtonValue('Hide List');
+        } else {
             self.show(false);
-            // $('.list-container').hide();
-            // $('.show-locations').show();
+            self.showButtonValue('Show List');
         }
     };
 
-    // will show the full list on smaller screens when clicked
-    self.showList = function() {
-        self.show(true);
-        // $('.list-container').show();
-        // $('.show-locations').hide();
+    self.responsiveList = function() {
+        if($(window).width() >= 768) {
+            self.show(true);
+        } else {
+            self.show(false);
+        }
     };
+
+    // self.hideList = function() {
+    //     if (self.show() = true){
+    //         self.show(false);
+    //         self.showButtonValue('Show List');
+    //     } else {
+    //         null;
+    //     }
+    // };
+
+    // hide list for smaller screens
+    // self.hideList = function() {
+    //     if ($(window).width() < 768) {
+    //         self.show(false);
+    //     }
+    // };
+
+    // will show the full list on smaller screens when clicked
+    // self.showList = function() {
+    //     self.show(true);
+    // };
 
     // Use knockout to set up search function that will
     // return a filtered query list and set marker
@@ -418,8 +417,6 @@ var ViewModel = function() {
 
     // initialize the map
     self.initMap = function() {
-        // create the map
-
         // set up map styles and controls
         var mapControlsAndStyles = {
             center: {
@@ -489,12 +486,10 @@ var ViewModel = function() {
                 ]
             }]
         };
+
+        // Create the map
         var mapCanvas = document.getElementById('map');
         self.map = new google.maps.Map(mapCanvas, mapControlsAndStyles);
-
-        // define variables for the map
-        var locations = self.locationsList;
-        var i, marker;
         // make one info window
         self.infoWindow = new google.maps.InfoWindow({
             maxWidth: 300,

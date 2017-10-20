@@ -30,30 +30,33 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand">Moab Adventures</a>
-                <a class="navbar-brand">
-                    <div data-bind="click: show" class="show-locations">List Locations</div>
-                </a>
+                 <button data-bind="click: showList, text: showButtonValue" class="show-locations"></button>
+                <!-- <a class="navbar-brand">
+                    <button><div data-bind="click: show" class="show-locations">Show Locations</div></button>
+                </a> -->
 
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse filter-list" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" >
 
                     <!-- ============= KO BINDING WITH MAP FUNCTION ============ -->
-                    <li>Select A Category</li>
 
 
+                    <li>
                     <select data-bind="options: categories,
-                                         optionsCaption: 'Choose Category',
-                                         value: selectedCategory">
+                                       value: selectedCategory" class="filter-list">
                     </select>
+                    </li>
+
+
 
 
 
@@ -98,7 +101,7 @@
 
     <main id="map"></main>
 
-    <aside class="list-container" data-bind="visible: show">
+    <aside class="list-container" data-bind="visible: show, css: {responsiveList()}">
         <ul data-bind="foreach: search" class="list">
             <li data-bind="text: name, click: $parent.makeListClickable.bind($data, $index), attr: {id: $index}" class="list-item"></li>
 
