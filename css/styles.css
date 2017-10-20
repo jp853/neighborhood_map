@@ -68,10 +68,11 @@ body {
     min-width: 225px;
     height: auto;
     position: relative;
-    z-index: 1;
+    z-index: 0;
     background-color: gainsboro;
     top: 10px;
     left: 10px;
+
 
 
 }
@@ -145,9 +146,9 @@ body {
 }
 
 @media screen and (min-width: 768px) {
-/*    .list-container {
-        display: block;
-  }*/
+    .list-container {
+        display: block !important;
+  }
 
     .show-locations {
         display: none;

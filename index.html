@@ -101,7 +101,7 @@
 
     <main id="map"></main>
 
-    <aside class="list-container" data-bind="visible: show, css: {responsiveList()}">
+    <aside class="list-container" data-bind="visible: show">
         <ul data-bind="foreach: search" class="list">
             <li data-bind="text: name, click: $parent.makeListClickable.bind($data, $index), attr: {id: $index}" class="list-item"></li>
 

@@ -158,10 +158,6 @@ var Model = {
             fourSquare.clientSecret + '&v=' +
             fourSquare.version;
 
-        var timeout = setTimeout(function() {
-            alert('ERROR: Failed to get Foursquare location data');
-        }, 5000);
-
         // ajax request for location description
         $.ajax(fullURL, {
             dataType: 'jsonp',
@@ -243,6 +239,10 @@ var ViewModel = function() {
 
     self.selectedCategory = ko.observable('All');
 
+    // make observables to show and hide the locations list
+    self.show = ko.observable(false);
+    self.showButtonValue = ko.observable('Show List');
+
     // use knockout js to put the locations into a list
     self.locationsList = [];
     Model.locations.forEach(function(element) {
@@ -289,12 +289,17 @@ var ViewModel = function() {
     self.makeListClickable = function(index) {
         // console.log(self.markersList[index()]);
         google.maps.event.trigger(self.markersList[index()], 'click');
-        self.hideList();
+        self.responsiveList();
     };
 
-    // make and observable to show and hide the locations list
-    self.show = ko.observable(false);
-    self.showButtonValue = ko.observable('Show List');
+    self.responsiveList = function() {
+        if($(window).width() >= 768) {
+            self.show(true)
+        } else {
+            self.show(false)
+            self.showButtonValue('Show List');
+        }
+    };
 
     self.showList = function() {
         if(self.show() === false){
@@ -305,35 +310,6 @@ var ViewModel = function() {
             self.showButtonValue('Show List');
         }
     };
-
-    self.responsiveList = function() {
-        if($(window).width() >= 768) {
-            self.show(true);
-        } else {
-            self.show(false);
-        }
-    };
-
-    // self.hideList = function() {
-    //     if (self.show() = true){
-    //         self.show(false);
-    //         self.showButtonValue('Show List');
-    //     } else {
-    //         null;
-    //     }
-    // };
-
-    // hide list for smaller screens
-    // self.hideList = function() {
-    //     if ($(window).width() < 768) {
-    //         self.show(false);
-    //     }
-    // };
-
-    // will show the full list on smaller screens when clicked
-    // self.showList = function() {
-    //     self.show(true);
-    // };
 
     // Use knockout to set up search function that will
     // return a filtered query list and set marker
