@@ -97,7 +97,7 @@ var Model = {
                 // Successful
             })  .fail(function(error) {
                 alert('Error: Failed to get location resources.');
-            })
+            });
         }
 
         // Four Square ajax request for supplied locations
@@ -281,9 +281,9 @@ var ViewModel = function() {
 
     self.responsiveList = function() {
         if($(window).width() >= 768) {
-            self.show(true)
+            self.show(true);
         } else {
-            self.show(false)
+            self.show(false);
             self.showButtonValue('Show List');
         }
     };
@@ -469,7 +469,7 @@ var ViewModel = function() {
 }; // viewModel
 
 googleMapError = function googleMapError() {
-    alert('Google Maps failed to load. Please refresh the page to try again.')
+    alert('Google Maps failed to load. Please refresh the page to try again.');
 };
 
 // refrence the View Model instance
