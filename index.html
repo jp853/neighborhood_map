@@ -24,7 +24,6 @@
 
 <body>
 
-
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -37,52 +36,17 @@
                 </button>
                 <a class="navbar-brand">Moab Adventures</a>
                  <button data-bind="click: showList, text: showButtonValue" class="show-locations"></button>
-                <!-- <a class="navbar-brand">
-                    <button><div data-bind="click: show" class="show-locations">Show Locations</div></button>
-                </a> -->
-
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse filter-list" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav" >
-
-                    <!-- ============= KO BINDING WITH MAP FUNCTION ============ -->
-
-
                     <li>
                     <select data-bind="options: categories,
                                        value: selectedCategory" class="filter-list">
                     </select>
                     </li>
-
-
-
-
-
-                    <!--    <ul data-bind = "forEach: filterLocation">
-                    <li>
-                        <span data-bind= "text: $data.name"></span>
-                    </li>
-                </ul> -->
-
-                    <!-- ========== New Buttons with KO Map function =========== -->
-
-
-
-                    <!-- =========== ORIGINAL KO BINDINGS ============ -->
-
-                    <!--               <li>
-                <span data-bind="foreach: filterLocationsList" class="">
-                  <button data-bind="click: function(data, event) {$parent.setUpCategoryFilter(name, data, event);}" type="button" class="btn btn-default-lg">
-                    <span data-bind="text: name"></span>
-                    <span><img data-bind="attr: {src: $data.image}" class="filter-img"></span>
-                  </button>
-                </span>
-              </li> -->
-
                 </ul>
-                <!-- /.category list -->
 
                 <form class="navbar-form navbar-right" role="search">
                     <!-- Search Bar -->
@@ -90,13 +54,8 @@
                         <input type="text" data-bind="value: query, valueUpdate: 'keyup', event: {keypress: enterDetected}" autocomplete="on" class="form-control" placeholder="Search">
                     </div>
                 </form>
-
-
-
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
+            </div> <!-- /.navbar-collapse -->
+        </div> <!-- /.container-fluid -->
     </nav>
 
     <main id="map"></main>

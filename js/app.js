@@ -459,24 +459,13 @@ var ViewModel = function() {
         });
     };
 
-    // prevent form from submitting when user presses enter key
-    // $(document).on('keypress', 'form', function(e) {
-    //     var code = e.keyCode || e.which;
-
-    //     if (code === 13) {
-    //         e.preventDefault();
-
-    //         return false;
-    //     }
-    // });
-
     self.enterDetected = function(data, event){
         var keyCode = (event.which ? event.which : event.keyCode);
         if (keyCode === 13) {
             return false;
         }
         return true;
-    }
+    };
 }; // viewModel
 
 googleMapError = function googleMapError() {
