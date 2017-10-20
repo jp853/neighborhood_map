@@ -1,6 +1,5 @@
 /* -- Model -- */
 var Model = {
-
     // locations that would normally be imported from a database
     locations: [{
             name: 'Chile Pepper Bike Shop',
@@ -69,11 +68,6 @@ var Model = {
         // set variables for ajax request
         var i, fullURL, fsDataObject, lat, lng, venue_id;
         var locations = Model.locations;
-        //var counter = 0;
-
-        // var timeout = setTimeout(function() {
-        //     alert('ERROR: Failed to get location resources');
-        // }, 5000);
 
         // ajax request for location data
         function getData(fullURL, i, location) {
@@ -98,13 +92,6 @@ var Model = {
                     myViewModel.makeMarker(location);
 
                     location.fourSquareID = venue_id;
-
-                    //counter++;
-
-                    // if (counter === locations.length) {
-                    //     clearTimeout(timeout);
-                    //     //myViewModel.initMap();
-                    // }
                 }
             })  .done(function(data) {
                 // Successful
@@ -318,7 +305,7 @@ var ViewModel = function() {
         var query = self.query().toLowerCase();
         var selectedCategory = self.selectedCategory();
 
-        console.log(selectedCategory === 'All', !query)
+        //console.log(selectedCategory === 'All', !query)
 
         if (!query && selectedCategory === 'All') {
             self.locationsList.forEach(function(location) {
@@ -379,7 +366,7 @@ var ViewModel = function() {
             icon: location.icon
         });
 
-        console.log(marker)
+        //console.log(marker)
         //add marker object to each locations array
         location.marker = marker;
 
@@ -483,37 +470,14 @@ var ViewModel = function() {
     //     }
     // });
 
-    ko.bindingHandlers.hotkey = {
-        init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-            var options = ko.utils.unwrapObservable(valueAccessor());
-
-            if (typeof options === "object") {
-                var trigger = options.trigger.toLowerCase();
-                var action = options.action;
-            } else {
-                var trigger = options;
-            }
-
-            var shift = trigger.indexOf("shift") > -1;
-            var ctrl = trigger.indexOf("ctrl") > -1;
-            var alt = trigger.indexOf("alt") > -1;
-            var key = trigger.substring(trigger.length - 1);
-
-            $(document).on("keydown", function(e) {
-                if (e.shiftKey === shift && e.ctrlKey === ctrl && e.altKey === alt && e.which === key.toUpperCase().charCodeAt(13)) {
-                    // hotkey hit
-                    // console.log(action);
-                    if (action && typeof action === "function") {
-                        action(element);
-                    } else {
-                        $(element).click(); // trigger the element click event
-                    }
-                    e.preventDefault();
-                }
-            });
+    self.enterDetected = function(data, event){
+        var keyCode = (event.which ? event.which : event.keyCode);
+        if (keyCode === 13) {
+            return false;
         }
-    };
-};
+        return true;
+    }
+}; // viewModel
 
 googleMapError = function googleMapError() {
     alert('Google Maps failed to load. Please refresh the page to try again.')

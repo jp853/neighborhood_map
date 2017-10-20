@@ -19,7 +19,6 @@ body {
 
 /* -------------- search box -------------- */
 
-
 .search-box {
     font-size: 1em;
     width: 50%;
@@ -27,8 +26,6 @@ body {
 }
 
 /* ------------- filter options --------------- */
-
-
 
 .filter-list {
     margin-top: 0.5em;
@@ -72,9 +69,6 @@ body {
     background-color: gainsboro;
     top: 10px;
     left: 10px;
-
-
-
 }
 
 .list {

@@ -87,7 +87,7 @@
                 <form class="navbar-form navbar-right" role="search">
                     <!-- Search Bar -->
                     <div class="form-group">
-                        <input type="text" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="on" class="form-control" placeholder="Search">
+                        <input type="text" data-bind="value: query, valueUpdate: 'keyup', event: {keypress: enterDetected}" autocomplete="on" class="form-control" placeholder="Search">
                     </div>
                 </form>
 
